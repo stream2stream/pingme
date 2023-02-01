@@ -56,7 +56,7 @@ public class PingController
 	@GetMapping("/status")
 	public	String getStatus()
 	{
-		return "Healthy...";
+		return "Healthy";
 	}
 
 	@GetMapping("/time")

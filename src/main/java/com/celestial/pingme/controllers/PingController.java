@@ -11,11 +11,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 import com.celestial.pingme.services.PingService;
 
 
-@RestController	
+@RestController
 @RequestMapping("/api")
-public class PingController 
+public class PingController
 {
-	final private	String	PINGME_ENDPOINT = "PINGME_ENDPOINT"; 
+	final private	String	PINGME_ENDPOINT = "PINGME_ENDPOINT";
 	/* Kubernetes will create a number of environment variables for you so you can located other PODs
 	 * If you a Service of type NodePort like this
 	 * apiVersion: v1
@@ -36,34 +36,34 @@ public class PingController
 	 * REMOTE_PINGME_SERVER_EP_SERVICE_HOST with the IP address of the POD's cluster
 	 * and
 	 * REMOTE_PINGME_SERVER_EP_SERVICE_PORT with the port that POD is exposed on on that cluster
-	 * 
+	 *
 	 * With this information we can automate the linking between the PODs
 	 */
-//	final private	String	PINGME_K8_ENDPOINT = "REMOTE_PINGME_SERVER_EP_SERVICE_HOST"; 
-//	final private	String	PINGME_K8_PORT = "REMOTE_PINGME_SERVER_EP_SERVICE_PORT"; 
+//	final private	String	PINGME_K8_ENDPOINT = "REMOTE_PINGME_SERVER_EP_SERVICE_HOST";
+//	final private	String	PINGME_K8_PORT = "REMOTE_PINGME_SERVER_EP_SERVICE_PORT";
 	private final String TIME_API = "/api/time";
 	private	PingService thePingService;
-	
+
 	@Autowired
 	private WebClient.Builder webClientBuilder;
-	
+
 	@Autowired
 	public	PingController( PingService ps )
 	{
 		thePingService = ps;
 	}
-	
+
 	@GetMapping("/status")
 	public	String getStatus()
 	{
-		return "Healthy";
+		return "Healthy...";
 	}
-	
+
 	@GetMapping("/time")
 	public	String getTime()
 	{
 		String theTime = thePingService.getTime();
-		
+
 		return theTime;
 	}
 
@@ -84,7 +84,7 @@ public class PingController
 //				endpoint = "http://" + endpoint + ":" + port;
 //			}
 //		}
-				
+
 		if(endpoint != null )
 		{
 			theTime = webClientBuilder.build()
@@ -96,7 +96,7 @@ public class PingController
 		}
 		else
 			theTime = "**" + thePingService.getTime();
-		
+
 		return theTime;
 	}
 }
